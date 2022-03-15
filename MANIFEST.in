@@ -1,0 +1,3 @@
+recursive-include tools_doc_sphinx *.py
+include *.txt
+include *.md
