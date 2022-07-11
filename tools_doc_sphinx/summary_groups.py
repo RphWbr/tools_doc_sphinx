@@ -10,20 +10,6 @@
 Module for the creation of groups of methods in the API documentation of
 classes, based on
 https://autodocsumm.readthedocs.io/en/latest/examples.html?highlight=example_grouper#including-a-table-of-contents
-
-The groups are defined in the source code with the following decorators.
-
-Start group::
-
-    # *********************************************************************** #
-    # Group: Methods for widget creation
-    # *********************************************************************** #
-
-End group::
-
-    # *********************************************************************** #
-    # End group
-    # *********************************************************************** #
 """
 
 import numpy as np
@@ -32,7 +18,13 @@ from importlib import import_module
 
 
 # global variable
-from pkg_name import PACKAGE_NAME
+try:
+    from pkg_name import PACKAGE_NAME
+
+except Exception:
+    #: (*str*) Name of the package to document with methods groups, imported
+    #: from a file named **pkg.py**
+    PACKAGE_NAME = ''
 
 
 def group_parser(module_path):

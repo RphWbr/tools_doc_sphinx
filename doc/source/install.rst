@@ -26,3 +26,7 @@ Dependencies
 ============
 
 **tools_doc_sphinx** requires Python 3.6+.
+
+Install `Sphinx <https://www.sphinx-doc.org/en/master/index.html>`_ for documentation generation.
+
+Install `autodocsumm <https://autodocsumm.readthedocs.io/en/latest/>`_ for API summary.

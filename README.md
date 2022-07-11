@@ -39,12 +39,6 @@ You may install **tools_doc_sphinx** from source:
 **tools_doc_sphinx** requires Python 3.6+.
 
 
-Usage
------
-
-TODO
-
-
 Support
 -------
 
