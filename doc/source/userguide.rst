@@ -46,8 +46,10 @@ At the root of the repository of the package, create the directory *doc*. Go ins
 	sphinx_rtd_theme==0.x.0
 	docutils==0.x
 	autodocsumm==0.x.x
+	six==1.x.0
+	jinja2==3.0.0
 
-Replace the packages versions by the actual versions you use. This file must be updated with any Python package that is required for your package.
+Replace the packages versions by the actual versions you use. Regarding **jinja2**, a specific version is required, otherwise ReadTheDocs encounters a bug. This file must be updated with any Python package that is required for your package.
 
 Inside the directory *doc*, create the sub-directory *source*. In this sub-directory are stored all the RST files for generating documentation. In particular, create the following files (do not forget to replace ``pkg_example`` with the actual name of your package):
 
