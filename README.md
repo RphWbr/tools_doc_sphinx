@@ -10,7 +10,7 @@ tools_doc_sphinx
 Documentation
 -------------
 
-Documentation is hosted on [ReadTheDocs](https://toolsdocsphinx.readthedocs.io/en/latest/index.html).
+Documentation is hosted on [ReadTheDocs](https://tools-doc-sphinx.readthedocs.io/en/latest/index.html).
 
 
 Installation
