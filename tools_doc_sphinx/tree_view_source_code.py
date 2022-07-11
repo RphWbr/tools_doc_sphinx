@@ -18,6 +18,18 @@ from glob import glob
 
 
 def get_ignored_items(dir_root, ignore_list):
+    """
+    Gets list of items to ignore in the tree view
+
+    :param dir_root: root directory for the tree view
+    :type dir_root: str
+    :param ignore_list: patterns/items to look for
+    :type ignore_list: list
+
+    :returns: list of items to ignore in the tree view
+    :rtype: list
+    """
+
     ignored_item_list = []
     exception_list = []
     for ignore in ignore_list:
@@ -45,6 +57,22 @@ def write_tree_view_recursive(
     dir_root_path, output_path, dir_root_name=None, ignored_item_list=[],
     level=0
 ):
+    """
+    Recursive function for writing tree view in a TXT file
+
+    :param dir_root_path: path to the root directory for the tree view
+    :type dir_root_path: str
+    :param output_path: path to output file where to write the tree view
+    :type output_path: str
+    :param dir_root_name: name to use as root directory inside the tree view,
+        by default it is the basename of ``dir_root_path``
+    :type dir_root_name: str
+    :param ignored_item_list: items to ignore in the tree view
+    :type ignored_item_list: list
+    :param level: nesting level inside the package structure
+    :type level: int
+    """
+
     if dir_root_name is None:
         dir_root_name = basename(dir_root_path)
 

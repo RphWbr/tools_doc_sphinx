@@ -21,6 +21,20 @@ from argparse import ArgumentParser
 
 
 def write_section(index_path, title, level=0, file_option='a'):
+    """
+    Writes a section in a RST index file
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param title: section title
+    :type title: str
+    :param level: section level (``0`` page title, ``1`` section,
+        ``2`` subsection, ``3`` subsubsection)
+    :type level: int
+    :param file_option: mode when opening the RST file
+    :type file_option: str
+    """
+
     title_length = len(title)
 
     if level == 0 or level == 1:
@@ -44,31 +58,84 @@ def write_section(index_path, title, level=0, file_option='a'):
 
 
 def write_toc_tree_directive(index_path):
+    """
+    Writes directive for table of content in RST index file
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    """
+
     with open(index_path, 'a') as f:
         f.write(".. toctree::\n   :titlesonly:\n\n")
 
 
 def write_toc_tree_index(index_path, index_link):
+    """
+    Writes index inside a table of content in RST index file
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param index_link: name of the folder containing the index file to point to
+    :type index_link: str
+    """
+
     with open(index_path, 'a') as f:
         f.write('   ' + index_link + '/index\n')
 
 
 def write_autosummary_directive(index_path):
+    """
+    Writes autosummary directive in RST index file
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    """
+
     with open(index_path, 'a') as f:
         f.write(".. autosummary::\n")
 
 
 def write_automodule_directive(index_path, module_full_name):
+    """
+    Writes automodule directive in RST index file
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param module_full_name: full name of the module inside the package
+    :type module_full_name: str
+    """
+
     with open(index_path, 'a') as f:
         f.write(".. automodule:: %s\n\n" % module_full_name)
 
 
 def write_automember(index_path, member_full_name):
+    """
+    Writes member inside autosummary directive in RST index file
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param member_full_name: full name of the member inside the package
+    :type member_full_name: str
+    """
+
     with open(index_path, 'a') as f:
         f.write("   %s\n" % member_full_name)
 
 
 def write_autofunction_directive(index_path, module_full_name, func_list):
+    """
+    Writes autofunction directive in RST index file for a set of functions
+    inside the same module
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param module_full_name: full name of the module inside the package
+    :type module_full_name: str
+    :param func_list: list of functions name inside the module
+    :type func_list: list
+    """
+
     with open(index_path, 'a') as f:
         for func_name in func_list:
             f.write(
@@ -79,6 +146,18 @@ def write_autofunction_directive(index_path, module_full_name, func_list):
 
 
 def write_autodata_directive(index_path, module_full_name, data_list):
+    """
+    Writes autodata directive in RST index file for a set of data inside the
+    same module
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param module_full_name: full name of the module inside the package
+    :type module_full_name: str
+    :param data_list: list of data name inside the module
+    :type data_list: list
+    """
+
     with open(index_path, 'a') as f:
         for data_name in data_list:
             f.write(".. autodata:: %s.%s\n" % (module_full_name, data_name))
@@ -87,6 +166,15 @@ def write_autodata_directive(index_path, module_full_name, data_list):
 
 
 def write_autoclass_directive(index_path, class_full_name):
+    """
+    Writes autoclass directive in RST index file
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param class_full_name: full name of the class inside the package
+    :type class_full_name: str
+    """
+
     with open(index_path, 'a') as f:
         f.write(".. autoclass:: %s\n" % class_full_name)
         f.write("   :members:\n")
@@ -97,12 +185,26 @@ def write_autoclass_directive(index_path, class_full_name):
 
 
 def write_module_summary(
-    index_path, package_full_name, member_list, title
+    index_path, module_full_name, member_list, member_type
 ):
+    """
+    Writes summary of a module for a specific type of member in RST index file
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param module_full_name: full name of the module inside the package
+    :type module_full_name: str
+    :param member_list: list of the members inside the module (all elements are
+        of same type)
+    :type member_list: list
+    :param member_type: members type (classes, functions, data, ...)
+    :type member_type: str
+    """
+
     # check if any member to summarize
     if len(member_list) > 0:
-        # write sub-title for functions
-        write_section(index_path, title, level=2)
+        # write sub-title for member type
+        write_section(index_path, member_type, level=2)
 
         # write autosummary directive
         write_autosummary_directive(index_path)
@@ -111,7 +213,7 @@ def write_module_summary(
         for member_name in member_list:
             # add member to summary
             write_automember(
-                index_path, "%s.%s" % (package_full_name, member_name)
+                index_path, "%s.%s" % (module_full_name, member_name)
             )
 
         # write empty line in index file
@@ -120,6 +222,17 @@ def write_module_summary(
 
 
 def write_api_data(index_path, module_full_name, data_list):
+    """
+    Writes "Data" section
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param module_full_name: full name of the module inside the package
+    :type module_full_name: str
+    :param data_list: list of the data inside the module
+    :type data_list: list
+    """
+
     # check if any data to document
     if len(data_list) > 0:
         # write sub-title for data
@@ -132,6 +245,17 @@ def write_api_data(index_path, module_full_name, data_list):
 
 
 def write_api_classes(index_path, module_full_name, class_list):
+    """
+    Writes "Classes" section
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param module_full_name: full name of the module inside the package
+    :type module_full_name: str
+    :param class_list: list of the classes inside the module
+    :type class_list: list
+    """
+
     # loop on classes
     for class_name in class_list:
         # get full path to class
@@ -145,6 +269,17 @@ def write_api_classes(index_path, module_full_name, class_list):
 
 
 def write_api_functions(index_path, module_full_name, func_list):
+    """
+    Writes "Functions" section
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param module_full_name: full name of the module inside the package
+    :type module_full_name: str
+    :param func_list: list of the functions inside the module
+    :type func_list: list
+    """
+
     # check if any function to document
     if len(func_list) > 0:
         # write sub-title for functions
@@ -157,6 +292,16 @@ def write_api_functions(index_path, module_full_name, func_list):
 
 
 def write_module_index(index_path, module, module_full_name):
+    """
+    Writes API page of a module
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param module: imported module
+    :param module_full_name: full name of the module inside the package
+    :type module_full_name: str
+    """
+
     # get list of global variables in the module
     data_list = get_members_defined_in_module(module, '')
 
@@ -203,6 +348,18 @@ def write_module_index(index_path, module, module_full_name):
 def write_package_index(
     index_path, package, package_full_name, out_dir
 ):
+    """
+    Writes all RST index files of a package
+
+    :param index_path: path to the RST file
+    :type index_path: str
+    :param package: imported package
+    :param package_full_name: full name of the package
+    :type package_full_name: str
+    :param out_dir: directory where to save RST index files
+    :type out_dir: str
+    """
+
     # write directive for toc tree
     write_toc_tree_directive(index_path)
 
@@ -219,8 +376,15 @@ def write_package_index(
 
 def get_members_defined_in_module(module, condition_function):
     """
-    condition_function may be any 'isXXX' function of the module inspect,
-    ``None`` (get everything) or '' (get global variables)
+    Get members that are defined in a module (imported members are ignored)
+
+    :param module: imported module
+    :param condition_function: may be any 'isXXX' function of the module
+        ``inspect``, ``None`` (get everything) or '' (get global variables),
+        see https://docs.python.org/3/library/inspect.html
+
+    :returns: list of members
+    :rtype: list
     """
 
     if isinstance(condition_function, str):
@@ -251,6 +415,24 @@ def get_members_defined_in_module(module, condition_function):
 def generate_index_files_recursive(
     package_name, package_root_name, out_dir
 ):
+    """
+    Recursive function for writing RST index files of a (sub-)package/module
+    and all sub-packages/modules
+
+    The function :func:`importlib.import_module` is used to import the
+    package/module, see
+    https://docs.python.org/3/library/importlib.html#importlib.import_module
+
+    :param package_name: name of the package, first positional argument of
+        :func:`importlib.import_module`
+    :type package_name: str
+    :param package_root_name: root of the package/module to import, keyword
+        argument of :func:`importlib.import_module`
+    :type package_root_name: str
+    :param out_dir: directory where to save the RST index files
+    :type out_dir: str
+    """
+
     # import package
     package = import_module(package_name, package_root_name)
 
@@ -286,6 +468,32 @@ def generate_index_files(
     package_name, doc_dir, package_dir=None, output_name="APIreference",
     chapter_title="API reference", flag_include_main=False
 ):
+    """
+    Main function for writing RST index files of a package/module and all
+    sub-packages/modules
+
+    First, it creates the output directory and the RST index file at the first
+    level of the package. Then, it creates the directories corresponding to the
+    package structure and the RST index files thanks to the recursive function
+    :func:`.generate_index_files_recursive`.
+
+    :param package_name: name of the package/module
+    :type package_name: str
+    :param doc_dir: directory where is stored the documentation source
+    :type doc_dir: str
+    :param package_dir: directory where is stored the package (to be temporally
+        added in the PYTHONPATH)
+    :type package_dir: str
+    :param output_name: name of the directory to create inside ``doc_dir``,
+        where to store RST index files
+    :type output_name: str
+    :param chapter_title: name of the chapter inside the whole documentation
+    :type chapter_title: str
+    :param flag_include_main: specify if the executable module ``__main__.py``
+        must be included in the documentation
+    :type flag_include_main: bool
+    """
+
     if package_dir is not None:
         path.insert(0, abspath(package_dir))
 
@@ -331,6 +539,19 @@ def generate_index_files(
 
 
 def append_main_index_file(main_index_path, api_ref_name):
+    """
+    Appends main RST index file of the documentation (which contains the
+    doctree of the whole documentation) with the main RST index file of the
+    API reference
+
+    :param main_index_path: path to the main RST index file of the
+        documentation
+    :type main_index_path: str
+    :param api_ref_name: name of the directory containing the RST index files
+        of the API reference
+    :type api_ref_name: str
+    """
+
     with open(main_index_path, 'r') as f:
         content_list = f.readlines()
         if "   %s/index\n" % api_ref_name not in content_list:

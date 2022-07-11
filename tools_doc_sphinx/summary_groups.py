@@ -8,7 +8,22 @@
 
 """
 Module for the creation of groups of methods in the API documentation of
-classes
+classes, based on
+https://autodocsumm.readthedocs.io/en/latest/examples.html?highlight=example_grouper#including-a-table-of-contents
+
+The groups are defined in the source code with the following decorators.
+
+Start group::
+
+    # *********************************************************************** #
+    # Group: Methods for widget creation
+    # *********************************************************************** #
+
+End group::
+
+    # *********************************************************************** #
+    # End group
+    # *********************************************************************** #
 """
 
 import numpy as np
@@ -21,6 +36,22 @@ from pkg_name import PACKAGE_NAME
 
 
 def group_parser(module_path):
+    """
+    Gets the set of methods defined in a module along with their respective
+    group
+
+    :param module_path: path to the source code file of the module
+    :type module_path: str
+
+    :returns: structured as follows:
+
+        - Key is class name, value is a dictionary structured as follows:
+
+            - Key is group name, value is the list of methods contained in the
+              group
+    :rtype: dict
+    """
+
     # define role identifiers
     start_group_exp = "    # Group: "
     end_group_exp = "    # End group"
@@ -136,6 +167,15 @@ def group_parser(module_path):
 
 
 def launch_group_parser(package_name):
+    """
+    Recursive function for launching :func:`.group_parser` inside a package
+
+    :param package_name: name of the package
+    :type package_name: str
+
+    :returns: see output of :func:`.group_parser`
+    """
+
     # import package
     package = import_module(package_name)
 
@@ -160,6 +200,11 @@ def launch_group_parser(package_name):
 
 
 def example_grouper(app, what, name, obj, section, parent):
+    """
+    See
+    https://autodocsumm.readthedocs.io/en/latest/examples.html?highlight=example_grouper#including-a-table-of-contents
+    """
+
     group_dict = launch_group_parser(PACKAGE_NAME)
     for class_name, group_dict_sub in group_dict.items():
         for group_name, meth_list in group_dict_sub.items():
@@ -168,4 +213,9 @@ def example_grouper(app, what, name, obj, section, parent):
 
 
 def setup(app):
+    """
+    See
+    https://autodocsumm.readthedocs.io/en/latest/examples.html?highlight=example_grouper#including-a-table-of-contents
+    """
+    
     app.connect('autodocsumm-grouper', example_grouper)
