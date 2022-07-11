@@ -50,7 +50,7 @@ Support
 
 This package is developed at the LTSI Lab, INSERM-1099, located at Université Rennes 1, France.
 
-For any enquiry, please send an email to raphael.weber@univ-rennes1.fr.
+For any enquiry, please send an email to raphael-weber@hotmail.fr.
 
 If you encounter a bug, feel free to raise an issue on [GitHub](https://github.com/RphWbr/tools_doc_sphinx/issues).
 
@@ -62,7 +62,7 @@ Copyright Université Rennes 1 / INSERM (2022)
 
 Contributor: Raphaël Weber
 
-raphael.weber@univ-rennes1.fr
+raphael-weber@hotmail.fr
 
 This software is a computer program whose purpose is to to provide tools for automatic generation of files used in Sphinx documentation.
 
