@@ -16,7 +16,9 @@ Create Sphinx documentation
 
 Source code
 -----------
-At the root of the repository of the package, create the directory *doc*. Go inside this directory and create the file **Makefile**::
+At the root of the repository of the package, create the directory *doc*. Go inside this directory and create the following files:
+
+- **Makefile**::
 
 	# Minimal makefile for Sphinx documentation
 	#
@@ -37,6 +39,15 @@ At the root of the repository of the package, create the directory *doc*. Go ins
 	# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 	%: Makefile
 		@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+- **requirements.txt** (optional, for ReadTheDocs)::
+
+	sphinx==3.x.x
+	sphinx_rtd_theme==0.x.0
+	docutils==0.x
+	autodocsumm==0.x.x
+
+Replace the packages versions by the actual versions you use. This file must be updated with any Python package that is required for your package.
 
 Inside the directory *doc*, create the sub-directory *source*. In this sub-directory are stored all the RST files for generating documentation. In particular, create the following files (do not forget to replace ``pkg_example`` with the actual name of your package):
 
